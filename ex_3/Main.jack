@@ -1,0 +1,46 @@
+//Tahel Nadav 207816612
+//Tzviya Laniado 315121798
+/** Initializes a new MoveSquare Dance game and starts running it. */
+
+
+class Main {
+    function void main() {
+	var MoveSquareGame game;
+    var int seed;
+    var int success;
+    let seed = 0;
+
+	do Output.printString("press the key the screen show you and the square will grow otherwise it will become smaller ");
+	do Output.printString("Press on any key to start.");
+	do Output.println();
+	while(Keyboard.keyPressed() = 0)
+		{ //randomaly
+			let seed = seed+1;
+			if(seed = 32766){
+				let seed =0;
+			}
+		}
+	let game = MoveSquareGame.new();
+	let success =  game.run();
+	do Screen.clearScreen();	 
+	do Screen.clearScreen();
+    if(success = 1 )
+	{
+     	do Output.printString("GAME COMPLETED!!! YOU ARE THE WINNER!!!");
+	}
+	else
+	{
+			do Output.printString("GAME OVER, YOU LOOSE, TRY AGAIN!");
+			do Output.println();
+	}
+		
+	 
+		
+	 return;
+
+	}
+    
+	
+	
+	
+}

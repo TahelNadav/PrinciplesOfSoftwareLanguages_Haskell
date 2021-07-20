@@ -1,0 +1,76 @@
+
+class MoveSquareGame {
+   field Square square; // the square of this game
+   field int rand;
+   field int point;
+   /** Constructs a new Square Game. */
+   constructor MoveSquareGame new() {
+      // Creates a square
+      let square = Square.new(200, 100, 30);
+	  let point = 3;//could be 3 errors
+
+      return this;
+   }
+
+  
+
+  
+   method int run() {
+      var char key;  // the key currently pressed by the user
+      var boolean exit;
+      let exit = false;
+      while (~exit) {
+		let rand = Random.between(1,5);
+		do Screen.clearScreen();
+		do square.draw();
+		do Output.printString("your points are ");
+		do Output.printInt(point);
+		if (rand = 1)  {
+		do Output.moveCursor(0,0);	
+		do Output.printString("\n UP ARROW "); }
+		if (rand = 2)  {
+		do Output.moveCursor(0,0);	
+        do Output.printString("\n DOWN ARROW "); }
+		if (rand = 3)  {	
+		do Output.moveCursor(0,0);	
+        do Output.printString("\n LEFT ARROW "); }
+		if (rand = 4)  {	
+		do Output.moveCursor(0,0);	
+        do Output.printString("\n RIGHT ARROW "); }
+         // waits for a key to be pressed
+         while (key = 0) {
+            let key = Keyboard.keyPressed();
+           
+         }
+		 
+		 if(((rand=1)&(key = 131))|((rand=2)&(key = 133))|((rand=3)&(key = 130))|((rand=4)&(key = 132)))
+		 {
+        
+		        do square.incSize();
+		        let point = point+1;
+		        if(point=10)
+		        {
+		           return 1;
+	            }
+		 }
+		
+		 else
+		 {
+		          do square.decSize();
+		          let point = point -1;
+		          if (point<1)
+		           { 
+		              return 0;
+		           }
+		 }
+
+         while (~(key = 0)) {
+            let key = Keyboard.keyPressed();
+         }
+     } // while
+     return 0;
+   }
+}
+
+
+
