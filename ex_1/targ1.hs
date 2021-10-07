@@ -18,8 +18,6 @@ readFilesDirectory = do putStr "Enter directory path:"
                         writeFile asmFileName ""
                         writeFile "C:\\Users\\tahel\\Desktop\\degree\\ekronot\\ex_1\\staticVar.txt" "0"
                         mapM (\currFile-> vmToAsm (directoryPath++"/"++currFile) asmFileName) vmFilesList
-
-                        
                         print vmFilesList
                         
 
@@ -52,29 +50,12 @@ makeCounter i = do iref <- newIORef i
                    return (Counter iref)   
 incCounter :: Int -> Counter -> IO ()            
 incCounter i (Counter c) = do modifyIORef c (+ i)
+
 showCounter :: Counter -> IO ()               
 showCounter (Counter c) = do c' <- readIORef c
                              print(c')   
-c =makeCounter 1     
-{-mainFunc= do
-    
-    
-     ia <- openFile "C:\\Users\\tahel\\Downloads\\Exercises\\Targil1\\project 07\\MemoryAccess\\PointerTest\\PointerTest.vm" ReadMode
-     writeFile asmPath ""
-     contenta<-hGetContents ia
-     let allinesa=lines contenta
-     let vmFileName=split "C:\\Users\\tahel\\Downloads\\Exercises\\Targil1\\project 07\\MemoryAccess\\StaticTest\\StaticTest"
-     --linesinfile allinesa
-     --let t=getDirectoryContents "C:\\Users\\tahel\\Desktop\\files_1"
-    -- let asmCode = map (\thisLine -> convertFunc (words thisLine) filename (fromJust (elemIndex thisLine listVm))) listVm
-     --let a=elemIndex  allinesa
-     let h=vmFileName!!((length vmFileName)-1)
-     --linesinfile (removeirrelevant allinesa) h 
-     print h-}
-    
-     --print c
+      
 removeirrelevant :: [String] -> [[Char]]
---removeirrelevant ((xs):arr)=["push"++xs]++arr
 removeirrelevant ((linList):arr)=do
                          let l=words linList
                          if(length l>0) then do
@@ -231,24 +212,8 @@ addingFunc :: (Eq t, Num t) => t -> [Char]
 addingFunc 0=""
 addingFunc x="A=A+1\n"++addingFunc (x-1)
 
- 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
 linesinfile :: [[Char]]->String->String->IO [Double]
 linesinfile [] x asmPath= return []
-    
 linesinfile (linList:xs) vmFileName asmPath = do
                         c <- makeCounter 0
                         let l=words linList
@@ -305,4 +270,3 @@ linesinfile (linList:xs) vmFileName asmPath = do
                         else 
                            
                            linesinfile xs vmFileName asmPath
-----
