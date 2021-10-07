@@ -5,10 +5,8 @@ import System.FilePath
     ( takeBaseName, takeExtension, takeFileName )
 import Data.Maybe () 
 import Data.IORef ( modifyIORef, newIORef, readIORef, IORef )
-----
 import Control.Applicative ()
 import System.Directory ( getDirectoryContents, removeFile )
---import Control.Monad
 import System.Environment ()
 
 readFilesDirectory :: IO ()
@@ -69,34 +67,19 @@ vmToAsm vmPath asmPath= do
 
 
 data Counter = Counter { x :: IORef Int }
+
 makeCounter :: Int -> IO Counter        
 makeCounter i = do iref <- newIORef i   
                    return (Counter iref)   
+                   
 incCounter :: Int -> Counter -> IO ()            
 incCounter i (Counter c) = do modifyIORef c (+ i)
+
 showCounter :: Counter -> IO ()               
 showCounter (Counter c) = do c' <- readIORef c
                              print(c')   
-c =makeCounter 1     
-{-mainFunc= do
-    
-    
-     ia <- openFile "C:\\Users\\tahel\\Downloads\\Exercises\\Targil1\\project 07\\MemoryAccess\\PointerTest\\PointerTest.vm" ReadMode
-     writeFile asmPath ""
-     contenta<-hGetContents ia
-     let allinesa=lines contenta
-     let vmFileName=split "C:\\Users\\tahel\\Downloads\\Exercises\\Targil1\\project 07\\MemoryAccess\\StaticTest\\StaticTest"
-     --linesinfile allinesa
-     --let t=getDirectoryContents "C:\\Users\\tahel\\Desktop\\files_1"
-    -- let asmCode = map (\thisLine -> convertFunc (words thisLine) filename (fromJust (elemIndex thisLine listVm))) listVm
-     --let a=elemIndex  allinesa
-     let h=vmFileName!!((length vmFileName)-1)
-     --linesinfile (removeirrelevant allinesa) h 
-     print h-}
-    
-     --print c
+
 removeirrelevant :: [String] -> [[Char]]
---removeirrelevant ((xs):arr)=["push"++xs]++arr
 removeirrelevant ((linList):arr)=do
                          let l=words linList 
                          if(length l>0) then do
@@ -225,14 +208,12 @@ neg asmPath=do
     appendFile asmPath negcomment
 
 notc asmPath=do
-    -----------------------------------------------------------------------
     let notcomment="\n//not\n@SP\nA=M-1\nD=M\nM=!D\n"
     appendFile asmPath notcomment
 
 eq asmPath=do
       
     c<-staticVar
-    --let v=(show c)
     let eqcomment="\n//eq\n@SP\nA=M-1\nD=M\nA=A-1\nD=M-D\n@IF_TRUE"++show c++"\nD;JEQ\nD=0\n@SP\nA=M-1\nA=A-1\nM=D\n@IF_FALSE"++show c++"\n0;JMP\n(IF_TRUE"++show c++")\nD=-1\n@SP\nA=M-1\nA=A-1\nM=D\n(IF_FALSE"++show c++")\n@SP\nM=M-1"
     appendFile asmPath eqcomment
 
@@ -291,7 +272,6 @@ ifgoto vmFileName namelable asmPath=do
 functiona :: (Eq t, Num t) => [Char] -> t -> FilePath -> IO ()
 functiona funcname k asmPath  =do
     let kpush=functionhelp k 
-    --let a=[push "constant" 0 "" ""| m <- [1..k]]
     let functioncomment="//function\n"++"("++funcname++")\n"++kpush
     appendFile asmPath functioncomment
 
@@ -320,7 +300,6 @@ linesinfile :: [[Char]]->String->String->IO [Double]
 linesinfile [] x asmPath= return []
     
 linesinfile (linList:xs) vmFileName asmPath = do
-                        --appendFile asmPath ("\n\n\n\n\n"++vmFileName++"\n\n\n\n\n")
                         
                         c <- makeCounter 0
                         let l=words linList
@@ -411,4 +390,3 @@ linesinfile (linList:xs) vmFileName asmPath = do
                         else 
                            
                            linesinfile xs vmFileName asmPath
-----
